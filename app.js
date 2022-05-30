@@ -1,37 +1,27 @@
-const express = require('express');
-var cors = require('cors');
-const app = express();
-app.use(cors())
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-var io = new Server(server,{
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST']
-  }
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+// Add messages when sockets open and close connections
+io.on('connection', socket => {
+  console.log(`[${socket.id}] socket connected`);
+  socket.on('disconnect', reason => {
+    console.log(`[${socket.id}] socket disconnected - ${reason}`);
+  });
+  socket.on('playerMove', coords => {
+    console.log(coords);
+  });
 });
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
-});
+// Broadcast the current server time as global message, every 1s
+// setInterval(() => {
+//   io.sockets.emit('time-msg', { time: new Date().toISOString() });
+// }, 1000);
 
-io.on('connection', (socket) => {
-    socket.on('clicked', (msg) => {
-        console.log('value: ' + msg);
-        io.emit('userClick',{data: msg + "hi22"})
-      });
+// Show the index.html by default
+app.get('/', (req, res) => res.sendFile('index.html'));
 
-      socket.on('playerMove', (msg) => {
-        console.log('value: ' + msg);
-        io.emit('playerMove',{data: msg})
-      });
-
-      
-
-  console.log('a user connected');
-});
-
-server.listen(3000, () => {
+// Start the express server
+http.listen(3000, function(){
   console.log('listening on *:3000');
 });
