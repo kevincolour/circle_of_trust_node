@@ -10,6 +10,7 @@ io.on('connection', socket => {
   });
   socket.on('playerMove', coords => {
     console.log(coords);
+    socket.emit('playerMove',coords)
   });
 });
 
@@ -19,7 +20,7 @@ io.on('connection', socket => {
 // }, 1000);
 
 // Show the index.html by default
-app.get('/', (req, res) => res.sendFile('index.html'));
+app.get('/', (req, res) => res.send({test:"hi"}));
 
 // Start the express server
 http.listen(3000, function(){
