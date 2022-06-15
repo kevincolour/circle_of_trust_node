@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/6959bc1b-d0ab-46b8-83b8-2b34a6fb0569/microsoft.web/sites/subscriptions/6959bc1b-d0ab-46b8-83b8-2b34a6fb0569/resourceGroups/circlecultureResourceGroup/providers/Microsoft.Web/sites/circleculture",
+    "appService.deploySubpath": "."
+}
