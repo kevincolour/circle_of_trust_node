@@ -1,12 +1,13 @@
 import { ConflictResolutionMode } from "@azure/cosmos";
-import { onError, port } from "./port";
 import { GameState, PlayersObject, Player, RoomsGameState } from "./types";
 
-const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
 
-
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
+app.use(express.static('public'));
  
 
 const globalGameState : RoomsGameState = {}
@@ -134,10 +135,9 @@ app.use((err, req, res, next) => {
 
 
 // Start the express server
-http.listen(port, function(){
+server.listen(port, function(){
   console.log('listening on *:3000');
 });
-http.on('error', onError);
 
 
 

@@ -1,9 +1,11 @@
 "use strict";
 exports.__esModule = true;
-var port_1 = require("./port");
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
+app.use(express.static('public'));
 var globalGameState = {};
 var globalPlayers = {};
 var INITIAL_POSITION = [0, 0];
@@ -106,10 +108,9 @@ app.use(function (err, req, res, next) {
     res.send('500: Internal server error');
 });
 // Start the express server
-http.listen(port_1.port, function () {
+server.listen(port, function () {
     console.log('listening on *:3000');
 });
-http.on('error', port_1.onError);
 function printGameState() {
     console.log("-----------current game state -----------");
     Object.keys(globalGameState).forEach(function (val, ind) {
