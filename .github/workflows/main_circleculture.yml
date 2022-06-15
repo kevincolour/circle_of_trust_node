@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'circleculture'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C84D5017BC8401791CEE2E9528BD030 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_29419ED444DB482BBC6BE88B860EBDC6 }}
           package: .
